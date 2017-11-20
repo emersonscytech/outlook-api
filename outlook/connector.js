@@ -1,3 +1,10 @@
+/***
+NOT BEING USED!
+
+READ THIS: https://docs.microsoft.com/en-us/outlook/rest/node-tutorial
+***/
+
+
 const url = require('url');
 const authHelper = require('./authHelper');
 const microsoftGraph = require("@microsoft/microsoft-graph-client");

@@ -1,0 +1,7 @@
+{
+	"redirectUri": "http://localhost:3000/auth/allow",
+	"client": {
+		"id": "YOUR_KEY",
+		"secret": "YOUR_SECRET"
+	}
+}

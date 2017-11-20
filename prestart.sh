@@ -2,3 +2,4 @@
 DIR_NAME="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )";
 
 $DIR_NAME/node_modules/.bin/tsc -p client;
+node $DIR_NAME/server.js;

@@ -28,11 +28,9 @@
 		"nodemon": "1.11.0",
 		"simple-oauth2": "^1.4.0",
 		"stylus": "0.54.5",
-		"typescript": "2.2.2",
-		"simple-oauth2": "^0.2.1"
+		"typescript": "2.2.2"
 	},
 	"scripts": {
-		"start": "node server.js",
-		"watch": "./node_modules/.bin/nodemon -e json -x node ./server/server.js"
+		"start": "./prestart.sh"
 	}
 }

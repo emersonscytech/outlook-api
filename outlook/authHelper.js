@@ -1,4 +1,11 @@
-const configuration = require("../configuration.json");
+let configuration;
+try {
+	configuration = require("../configuration.json");
+} catch(e) {
+	console.error("Please create a file named configuration.json in current folder!");
+	console.error("Read configuration-template.json.\n");
+	process.exit(-1);
+}
 
 const clientId = configuration.id;
 const clientSecret = configuration.secret;

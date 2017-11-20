@@ -1,0 +1,62 @@
+<md-content layout-padding>
+	<form name="userForm">
+		<div layout-gt-sm="column">
+			<div layout-padding layout="row">
+				<h3>EVENT DETAILS</h3>
+				<md-button class="md-fab md-mini md-warn" ng-if="eventCtrl.eventId" ng-click="eventCtrl.deleteEvent()">
+					<md-icon>delete</md-icon>
+				</md-button>
+			</div>
+
+			<md-content>
+				<strong ng-show="eventCtrl.message">
+					Response: {{eventCtrl.message}} <button ng-click="eventCtrl.message=''">X</button>
+				</strong>
+			</md-content>
+
+			<md-input-container flex>
+				<label>Subject</label>
+				<input ng-model="eventCtrl.outlookEvent.Subject" value="eventCtrl.outlookEvent.Subject">
+			</md-input-container>
+
+			<md-input-container flex>
+				<label>Content</label>
+				<input ng-model="eventCtrl.outlookEvent.Body.Content" value="eventCtrl.outlookEvent.Body.Content">
+			</md-input-container>
+
+			<md-input-container flex>
+				<label>Location</label>
+				<input ng-model="eventCtrl.outlookEvent.Location.DisplayName" >
+			</md-input-container>
+
+			<div layout="row" layout-sm="column" layout-align="center center" layout-wrap>
+				<md-input-container>
+					<label>Start date</label>
+					<md-datepicker ng-model="eventCtrl.outlookEvent.Start.DateTime"></md-datepicker>
+				</md-input-container>
+
+				<md-input-container>
+					<label>End date</label>
+					<md-datepicker ng-model="eventCtrl.outlookEvent.End.DateTime"></md-datepicker>
+				</md-input-container>
+			</div>
+
+			<md-content layout="row" layout-sm="column" layout-align="center center" layout-wrap>
+				<md-button class="md-raised md-primary" ng-click="eventCtrl.submit()">
+					SAVE
+				</md-button>
+				<md-button href="#!/calendar" class="md-raised md-warn">
+					Go Back
+				</md-button>
+				<md-button href="#!/" class="md-raised md-warn">
+					HOME
+				</md-button>
+			</md-content>
+		</div>
+	</form>
+</md-content>
+
+<div style="width: 300px; height: 400px;">
+	<pre><code>{{eventCtrl.outlookEvent | json}}</code></pre>
+</div>
+

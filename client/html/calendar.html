@@ -1,0 +1,29 @@
+<div layout="column" layout-align="center center">
+	<md-content layout-padding>
+		<h3>CALENDAR</h3>
+	</md-content>
+
+	<div ng-if="calendarCtrl.calendarData.error">
+		<strong style="color:red;">{{calendarCtrl.calendarData.error}}</strong>
+	</div>
+
+	<div ng-if="calendarCtrl.calendarData.response.length == 0">
+		<strong>No Events.</strong>
+	</div>
+
+	<div ng-repeat="evt in calendarCtrl.calendarData.response">
+		<md-button class="evt-btn md-primary md-raised" ng-href="/#!/calendar/{{evt.Id}}" title=" View / Edit">
+			{{evt.Subject}}
+		</md-button>
+	</div>
+</div>
+
+<md-content layout="row" layout-sm="column" layout-align="center center" layout-wrap>
+	<md-button href="#!/calendar/create" class="md-raised md-warn">
+		Create
+	</md-button>
+
+	<md-button href="/" class="md-warn md-raised">
+		Go Back
+	</md-button>
+</md-content>

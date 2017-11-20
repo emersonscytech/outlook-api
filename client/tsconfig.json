@@ -1,0 +1,23 @@
+{
+	"module": "none",
+	"compileOnSave": true,
+	"compilerOptions": {
+		"target": "es5",
+		"alwaysStrict": true,
+		"noImplicitAny": true,
+		"noImplicitReturns": true,
+		"noImplicitThis": true,
+		"noUnusedLocals": true,
+		"noUnusedParameters": true,
+		"outDir": "js",
+		"types": [
+			"angular-material",
+			"moment",
+			"angular",
+			"angular-route"
+		]
+	},
+	"include": [
+		"ts/**/*.ts"
+	]
+}

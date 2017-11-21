@@ -14,18 +14,6 @@ app.use(bodyParser.json());
 
 app.use(cookieParser());
 
-const tokenReceived = (req, res, error, token) => {
-	if (error) {
-		console.log('ERROR getting token:'  + error);
-		res.send('ERROR getting token: ' + error);
-	} else {
-		app.set("access_token", token.token.access_token);
-		app.set("refresh_token", token.token.refresh_token);
-		app.set("email", authHelper.getEmailFromIdToken(token.token.id_token));
-		res.redirect('/logincomplete');
-	}
-}
-
 app.set('views', path.join(__dirname, '/client/html'));
 app.engine('html', require('ejs').renderFile);
 app.set('view engine', 'html');
@@ -46,36 +34,24 @@ app.get('/auth/allow', (req, res) => {
 	if (authCode) {
 		console.log('');
 		console.log('Retrieved auth code in /authorize: ' + authCode);
-		authHelper.getTokenFromCode(authCode, tokenReceived, req, res);
+
+		authHelper.getTokenFromCode(authCode, (error) => {
+			res.redirect("/");
+		}, (token) => {
+			app.set("access_token", token.token.access_token);
+			app.set("refresh_token", token.token.refresh_token);
+			app.set("email", authHelper.getEmailFromIdToken(token.token.id_token));
+
+			authHelper.getTokenFromRefreshToken(token.token.refresh_token, () => {
+				res.redirect("/");
+			}, () => {
+				res.redirect("http://localhost:3000/#!/calendar");
+			});
+		});
+
 	} else {
 		console.log('/authorize called without a code parameter, redirecting to login');
 		res.redirect('/');
-	}
-});
-
-app.get('/logincomplete', (req, res) => {
-	const accessToken = app.get("access_token");
-	const refreshToken = app.get("access_token");
-	const email = app.get("email");
-
-	if (accessToken === undefined || refreshToken === undefined) {
-		console.log('/logincomplete called while not logged in');
-		res.redirect('/');
-		return;
-	}
-
-	res.redirect("http://localhost:3000/#!/calendar");
-});
-
-
-app.get('/refreshtokens', (req, res) => {
-	const refreshToken = app.get("access_token");
-
-	if (refreshToken === undefined) {
-		console.log('no refresh token in app');
-		res.redirect('/');
-	} else {
-		authHelper.getTokenFromRefreshToken(refreshToken, tokenReceived, req, res);
 	}
 });
 
@@ -182,8 +158,14 @@ app.post('/calendar/create', (req, res) => {
 				"error": error
 			});
 		} else {
-			res.json({
-				"event": event
+			authHelper.getTokenFromRefreshToken(accessToken, () => {
+				res.json({
+					"event": event
+				});
+			}, () => {
+				res.json({
+					"event": event
+				});
 			});
 		}
 	});
